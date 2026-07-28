@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="/static/style.css">
+    <title>Login</title>
+</head>
+
+<body>
+
+    <div class="container d-flex justify-content-center align-items-center vh-100">
+        <div class="col-md-5 col-sm-10">
+            <div class="form-container">
+                <h1 class="text-center mb-4">Login</h1>
+
+                <% if (error&& error.length>0) { %>
+                <div class="alert alert-danger">
+                    <%= error[0] %>
+                </div>
+                <% } %>
+
+                    <% if (success && success.length>0) { %>
+                        <div class="alert alert-success">
+                            <%= success[0] %>
+                        </div>
+                        <% } %>
+
+                <form action="/user/login" method="POST" id="loginForm" novalidate>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Email</label>
+                        <input type="email" name="email" id="email" class="form-control">
+                        <div class="error-msg" id="emailError"></div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Password</label>
+                        <input type="password" name="password" id="password" class="form-control">
+                        <div class="error-msg" id="passwordError"></div>
+                    </div>
+
+                    <button class="btn w-100 mt-3" type="submit">Login</button>
+                </form>
+
+                <p class="text-center mt-3">Don't have an account? <a href="/user/signup">Sign up</a></p>
+                <a href="/admin/adminlogin" class="admin-btn d-flex justify-content-center align-items-center">
+                    admin Access
+                </a>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+
+
+        const form = document.getElementById("loginForm");
+        const email = document.getElementById("email");
+        const password = document.getElementById("password");
+
+        const emailErr = document.getElementById("emailError");
+        const passwordErr = document.getElementById("passwordError");
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        form.addEventListener("submit", (e) => {
+
+            let valid = true;
+
+            //email validation
+
+            if (email.value.trim() === "") {
+                emailErr.textContent = "Email canot empty";
+                emailErr.style.display = "block";
+                valid = false;
+
+            } else if (!emailRegex.test(email.value)) {
+                emailErr.textContent = "Please enter a valid email";
+                emailErr.style.display = "block";
+                valid = false;
+
+            } else {
+                emailErr.style.display = "none";
+            }
+
+            //password validation
+
+            if (password.value.length < 6) {
+                passwordErr.textContent = "Password atleast 6 charactors";
+                passwordErr.style.display = "block";
+                valid = false;
+            } else {
+
+                passwordErr.style.display = "none";
+            }
+            if (valid == false) {
+                e.preventDefault();
+            }
+        })
+        setTimeout(() => {
+            document.querySelectorAll(".alert").forEach(a => a.style.display = "none");
+        }, 2000);
+    </script>
+
+
+</body>
+
+</html>

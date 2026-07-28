@@ -1,0 +1,49 @@
+.user-home-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.user-home-page .user-navbar {
+  background-color: #111;
+  padding: 15px;
+  border-bottom: 2px solid rgba(179, 139, 255, 0.3);
+}
+
+.user-home-page .user-navbar-title {
+  color: #b38bff;
+  font-weight: bold;
+  font-size: 22px;
+}
+
+.user-home-page .logout-btn {
+  background-color: #b38bff !important;
+  color: black !important;
+  padding: 6px 18px !important;
+  border-radius: 6px !important;
+}
+
+.user-home-page .user-home-container {
+  height: 85vh;
+  max-width: 900px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.user-home-page .welcome-title {
+  font-size: 40px;
+  font-weight: 700;
+  color: #b38bff !important;
+  margin-bottom: 10px;
+  animation: fadeIn 1.2s ease;
+}
+
+.user-home-page .welcome-subtitle {
+  margin-bottom: 25px;
+  opacity: 0.8;
+  font-size: 18px;
+}

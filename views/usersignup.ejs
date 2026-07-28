@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="/static/style.css">
+    <title>Sign Up</title>
+</head>
+
+<body>
+
+    <div class="container d-flex justify-content-center align-items-center vh-100">
+        <div class="col-md-5 col-sm-10">
+            <div class="form-container">
+                <h1 class="text-center mb-4">Sign Up</h1>
+                <% if (error&& error.length>0) { %>
+                    <div class="container alert alert-danger mt-2">
+                        <%= error[0] %>
+                    </div>
+                    <% } %>
+
+                        <% if (success && success.length>0) { %>
+                            <div class="container alert alert-success mt-2">
+                                <%= success[0] %>
+                            </div>
+                            <% } %>
+
+                                <form action="/user/signup" id="signupForm" method="POST" novalidate>
+                                    <div class="mb-3">
+                                        <label class="form-label fw-semibold">Usernme </label>
+                                        <input type="text" name="username" id="username" class="form-control">
+                                        <div class="error-msg" id="usernameErr"></div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label fw-semibold">Email</label>
+                                        <input type="email" name="email" id="email" class="form-control">
+                                        <div class="error-msg" id="emailErr"></div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label fw-semibold">Password</label>
+                                        <input type="password" name="password" id="password" class="form-control">
+                                        <div class="error-msg" id="passwordErr">Password must be at least 6 charactors
+                                        </div>
+                                    </div>
+
+                                    <button class="btn w-100 mt-3" type="submit">Sign Up</button>
+                                </form>
+
+                                <p class="text-center mt-3">Already have an account? <a href="/user/login">Login</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById("signupForm");
+        const username = document.getElementById("username");
+        const email = document.getElementById("email");
+        const password = document.getElementById("password");
+
+        const usernameErr = document.getElementById("usernameErr");
+        const emailErr = document.getElementById("emailErr");
+        const passwordErr = document.getElementById("passwordErr");
+
+
+        form.addEventListener("submit", (e) => {
+            let valid = true;
+
+            const emailregex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const nameregex = /^[A-Za-z]+$/;
+
+            //username validation
+
+            if (username.value.trim() === "") {
+                usernameErr.textContent = "Name canot empty";
+                usernameErr.style.display = "block";
+                valid = false;
+
+            } else if (!nameregex.test(username.value.trim())) {
+                usernameErr.textContent = "Name must contain only letters"
+                usernameErr.style.display = "block";
+                valid = false;
+            }
+
+            //email validation
+
+            if (email.value.trim() === "") {
+                emailErr.textContent = "Email canot empty";
+                emailErr.style.display = "block";
+                valid = false;
+
+            } else if (!emailregex.test(email.value)) {
+                emailErr.textContent = "Please enter a valid email";
+                emailErr.style.display = "block";
+                valid = false;
+
+            } else {
+                emailErr.style.display = "none";
+            }
+
+            //password validation
+
+            if (password.value.length < 6) {
+                passwordErr.style.display = "block";
+                valid = false;
+            } else {
+
+                passwordErr.style.display = "none";
+            }
+            if (valid == false) {
+                e.preventDefault();
+            }
+        });
+    </script>
+
+</body>
+
+</html>
